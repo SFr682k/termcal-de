@@ -32,6 +32,7 @@
 %
 %
 % \subsubsection*{Initialize}
+% \changes{1.0}{2017-08-03}{Initial release}
 % Identify the package and require \LaTeXe
 %    \begin{macrocode}
 \ProvidesPackage{termcal-de}[2018/03/06 German locals to the termcal package]
@@ -48,6 +49,7 @@
 %    \end{macrocode}
 %
 % Require packages providing the key-value option stuff
+% \changes{2.0}{2018-03-06}{Key-Value-Options}
 %    \begin{macrocode}
 \RequirePackage{pgfkeys}
 \RequirePackage{pgfopts}
@@ -84,6 +86,7 @@
 %
 % \medskip
 % Define a \opt{compat} option for switching on compatibility mode
+% \changes{2.0}{2018-03-06}{Introduce a compatibility option}
 %    \begin{macrocode}
 \pgfkeys{%
     /termcal-de/compat/.code={\@termcalde@compattrue}}
@@ -96,6 +99,7 @@
 %     \item[\texttt{never}] Never draw a frame around the date
 % \end{itemize}
 %    \begin{macrocode}
+% \changes{2.0}{2018-03-06}{Configurable date frame}
 \pgfkeys{%
     /termcal-de/drawdateframe/.cd, .is choice, .default=always,
             always/.code={\def\termcalde@setdrawbox{\@termcalde@drawboxtrue}},
@@ -146,6 +150,7 @@
 %
 %
 % \subsubsection*{Require and configure \texttt{datetime2}}
+% \changes{2.0}{2018-03-06}{Require \texttt{datetime2}}
 %
 % \begin{macro}{\termcalde@dtmnumeric}
 % Define an auxiliary command, adding "=numeric" to "datetime2"'s "useregional" key and adding "-numeric" to "datetime2"'s module names,

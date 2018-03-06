@@ -33,7 +33,7 @@
 
 \usepackage{csquotes}
 \usepackage{hologo}
-\usepackage[unicode, pdfborder={0 0 0}, linktoc=all]{hyperref}
+\usepackage[unicode, pdfborder={0 0 0}, linktoc=all, hyperindex=false]{hyperref}
 
 \parindent 0pt
 
@@ -44,12 +44,16 @@
 
 \usepackage[left=4.50cm,right=2.75cm,top=3.25cm,bottom=2.75cm,nohead]{geometry}
 
-\MakeShortVerb{"}
-\CheckSum{128}
-
-\newcommand*{\opt}[1]{\texttt{#1}\index{#1=\texttt{#1}|main}}
 
 \hyphenation{}
+
+
+\MakeShortVerb{"}
+\CheckSum{130}
+
+\renewcommand*{\usage}[1]{\hyperpage{#1}}
+\renewcommand*{\main}[1]{\hyperpage{#1}}
+\newcommand*{\opt}[1]{\texttt{#1}\index{#1=\texttt{#1}|main}}
 
 \PageIndex
 \RecordChanges
@@ -58,7 +62,7 @@
 
 \title{The \texttt{termcal-de} package \\ {\large\url{https://github.com/SFr682k/termcal-de}}}
 \author{Sebastian Friedl \\ \href{mailto:sfr682k@t-online.de}{\ttfamily sfr682k@t-online.de}}
-\date{2018/03/06}
+\date{2018/03/06 (v2.0)}
 
 \hypersetup{pdftitle={The termcal-de package},pdfauthor={Sebastian Friedl}}
 
@@ -206,13 +210,13 @@
         \label{dateformatcomp}
     \end{table}
     
-    
-    \section{Additional information}
-    \subsection{Using short month names}
-    By default, \texttt{termcal-de} prints long month names (e.~g.~\enquote{Januar}) when a new month starts. Passing the \texttt{shortmonth} option to the "\usepackage{termcal-de}" command switches to printing short month names (e.~g.~\enquote{Jan} for \enquote{Januar}).
-    
-    \subsection{Printing the current date}
-    You can print the current date for a cell using the "\currentdate" command inside this cell. It produces something like \enquote{9.~Februar~2000}.
+    % TODO: Move this stuff to other sections
+%     \section{Additional information}
+%     \subsection{Using short month names}
+%     By default, \texttt{termcal-de} prints long month names (e.~g.~\enquote{Januar}) when a new month starts. Passing the \texttt{shortmonth} option to the "\usepackage{termcal-de}" command switches to printing short month names (e.~g.~\enquote{Jan} for \enquote{Januar}).
+%     
+%     \subsection{Printing the current date}
+%     You can print the current date for a cell using the "\currentdate" command inside this cell. It produces something like \enquote{9.~Februar~2000}.
     
     
     
@@ -220,9 +224,10 @@
     \StopEventually{%
         \clearpage
         \phantomsection
-        \addcontentsline{toc}{section}{Change History}%
+        \addcontentsline{toc}{part}{Indices}%
         \PrintChanges
-        \addcontentsline{toc}{section}{\indexname}%
+        \setcounter{IndexColumns}{2}
+        \IndexPrologue{\section*{Index}}
         \PrintIndex}
     \clearpage
     \part{The package code}
