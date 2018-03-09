@@ -1,4 +1,4 @@
-%%  This is file 'termcal-de-doc.dtx', Version 2018-03-06
+%%  This is file 'termcal-de-doc.dtx', Version 2018-03-09
 %%  Copyright 2017-18 Sebastian Friedl <sfr682k@t-online.de>
 %% 
 %%  This work may be distributed and/or modified under the conditions of the LaTeX Project
@@ -35,7 +35,7 @@
 \usepackage{hologo}
 \usepackage[unicode, pdfborder={0 0 0}, linktoc=all, hyperindex=false]{hyperref}
 
-\parindent 0pt
+\parindent0pt
 
 \usepackage[erewhon]{newtxmath}
 \setmainfont{erewhon}
@@ -45,11 +45,11 @@
 \usepackage[left=4.50cm,right=2.75cm,top=3.25cm,bottom=2.75cm,nohead]{geometry}
 
 
-\hyphenation{}
+\hyphenation{ori-ginal}
 
 
 \MakeShortVerb{"}
-\CheckSum{130}
+\CheckSum{131}
 
 \renewcommand*{\usage}[1]{\hyperpage{#1}}
 \renewcommand*{\main}[1]{\hyperpage{#1}}
@@ -62,7 +62,7 @@
 
 \title{The \texttt{termcal-de} package \\ {\large\url{https://github.com/SFr682k/termcal-de}}}
 \author{Sebastian Friedl \\ \href{mailto:sfr682k@t-online.de}{\ttfamily sfr682k@t-online.de}}
-\date{2018/03/06 (v2.0)}
+\date{2018/03/09 (v2.0)}
 
 \hypersetup{pdftitle={The termcal-de package},pdfauthor={Sebastian Friedl}}
 
@@ -156,7 +156,7 @@
     \part{The documentation}
     \section{Getting started}
     \subsection{Loading the package}
-    Load the package as usual with "\usepackage{termcal-de}". Now, "termcal-de" looks for "termcal" and loads it when necessary.
+    Load "termcal-de" with "\usepackage{termcal-de}" \textit{after loading "babel" or "polyglossia"}. Now, "termcal-de" looks for "termcal" and loads it when necessary.
     
     \medskip
     "termcal-de" only adds a German localization to the \texttt{termcal} package. \\
@@ -173,17 +173,79 @@
     \end{itemize}
     
     
-    \subsection{Package options}
-    % TODO: Write this section!
+    \subsection{Package options} \label{sec:options}
+    \textbf{TODO:} Provide a package option allowing to use abbreviated month names
+    
+    \subsubsection*{How to read this section}
+    \textbf{TODO:} Explain better how to interpret the option list and provide some basic examples
+    
+    \begin{itemize}
+        \item "key" \dotfill \underline{"possible"}, \texttt{\bfseries values} \\[\smallskipamount]
+            \textbf{bold}: default behavior of "termcal-de" loaded without any options \\
+            \underline{underline}: value assumed when no value for "key" is given
+            
+    \end{itemize}
+
+    
+    
+    \subsubsection*{Provided key-value options}
+    The following key-value options are provided for allowing configuration of "termcal-de"'s behavior:
+    \begin{itemize}
+        \item \opt{compat}
+            \dotfill \underline{"true"}, \texttt{\bfseries false} \\[\smallskipamount]
+            When "compat"'s value is set to "true", "termcal-de" will retain compatibility to the original "termcal" package and avoid changing the date format required by "termcal"'s commands.
+            
+        \item \opt{drawdateframe}
+            \dotfill \underline{"always"}, "atNewMonth", \texttt{\bfseries never} \\[\smallskipamount]
+            This option allows to configure when a frame is drawn around the date. \\
+            Setting "drawdateframe"'s value to "always" will draw a frame around \emph{every} date in the calendar.
+            Specifying "atNewMonth" will draw a frame around the date when the month has changed since the last cell.
+            Using the "never" value will draw no frame around any date.
+            
+        \item \opt{datetime2} \\
+            This key set allows you to configure the way "datetime2" is configured for printing dates to the single cells. \\
+            Configuration is done by changing the subkeys' values: \\
+            "\usepackage[datetime2={local=de-DE, numeric}]{termcal-de}"
+            
+            \smallskip
+            The following subkeys are available:
+            \begin{itemize}
+                \item "local"
+                    \dotfill \underline{\texttt{\bfseries useregional}}, "german", "de-DE", "de-AT", "de-CH" \\[\smallskipamount]
+                    Determines the language module used by "datetime2". \\
+                    When "useregional" is set, the language module will be loaded according to "babel"'s or "polyglossia"'s settings. \\
+                    Otherwise, the explicitly given language module will be used.
+                    
+                \item "numeric"
+                    \dotfill \underline{\texttt{\bfseries true}}, "false"  \\[\smallskipamount]
+                    Determines whether "datetime2" uses numeric date styles.
+                
+                \item "frompreamble"
+                    \dotfill \underline{"true"}, \texttt{\bfseries false} \\[\smallskipamount]
+                    When "datetime2" is loaded and configured in your preamble, you should set this key's value to "true". Otherwise, there will be clashing package options.
+                    
+                    \smallskip
+                    When the value of this key is "true", the keys "local" and "numeric" will be ignored.
+            \end{itemize}
+    \end{itemize}
+
     
     
     
     \section{A short tutorial} \label{sec:tutorial}
     % TODO: Write a tutorial explaining the basic usage of termcal-de's commands
+    \textbf{TODO:} Write a short tutorial explaining "termcal"'s basic usage
     
-    
+    \begin{description}
+        \item[Printing the current date.]
+            Using the "\currentdate" command inside a cell will insert the date as printed in the top left corner of the according cell.
+    \end{description}
     
     \section{Differences to plain \texttt{termcal}} \label{sec:differences}
+    \paragraph{Important Note:}
+    \textit{This section only applies until the "compat" option (see section \ref{sec:options}) is given.} As soon as you pass it to "termcal-de", the command's syntax stays the same as in plain "termcal".
+    
+    \bigskip\medskip
     "termcal-de" does not only change the format of the printed dates, it also changes the date parameter's format expected by the standard "termcal" commands. \\
     In following, affected commands are listed:
     

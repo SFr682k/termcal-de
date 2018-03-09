@@ -35,7 +35,7 @@
 % \changes{1.0}{2017-08-03}{Initial release}
 % Identify the package and require \LaTeXe
 %    \begin{macrocode}
-\ProvidesPackage{termcal-de}[2018/03/06 German locals to the termcal package]
+\ProvidesPackage{termcal-de}[2018/03/09 v2.0 German locals to the termcal package]
 \NeedsTeXFormat{LaTeX2e}
 %    \end{macrocode}
 %
@@ -49,7 +49,7 @@
 %    \end{macrocode}
 %
 % Require packages providing the key-value option stuff
-% \changes{2.0}{2018-03-06}{Key-Value-Options}
+% \changes{2.0}{2018-03-09}{Key-Value-Options}
 %    \begin{macrocode}
 \RequirePackage{pgfkeys}
 \RequirePackage{pgfopts}
@@ -86,10 +86,12 @@
 %
 % \medskip
 % Define a \opt{compat} option for switching on compatibility mode
-% \changes{2.0}{2018-03-06}{Introduce a compatibility option}
+% \changes{2.0}{2018-03-09}{Introduce a compatibility option}
 %    \begin{macrocode}
 \pgfkeys{%
-    /termcal-de/compat/.code={\@termcalde@compattrue}}
+    /termcal-de/compat/.cd, .is choice, .default=true,
+        true/.code={\@termcalde@compattrue},
+        false/.code={\@termcalde@compatfalse}}
 %    \end{macrocode}
 %
 % Define a \opt{drawdateframe} option for configuring whether a frame is drawn around the date:
@@ -98,8 +100,8 @@
 %     \item[\texttt{atNewMonth}] Draw a frame around the date at the beginning of a month
 %     \item[\texttt{never}] Never draw a frame around the date
 % \end{itemize}
+% \changes{2.0}{2018-03-09}{Configurable date frame}
 %    \begin{macrocode}
-% \changes{2.0}{2018-03-06}{Configurable date frame}
 \pgfkeys{%
     /termcal-de/drawdateframe/.cd, .is choice, .default=always,
             always/.code={\def\termcalde@setdrawbox{\@termcalde@drawboxtrue}},
@@ -139,8 +141,9 @@
     /termcal-de/datetime2/numeric/.cd, .is choice, .default=true,
         true/.code={\@termcalde@dtmconf@numerictrue},
         false/.code={\@termcalde@dtmconf@numericfalse},
-    /termcal-de/datetime2/frompreamble/.code={\@termcalde@dtmconf@frompreambletrue}
-}
+    /termcal-de/datetime2/frompreamble/.cd, .is choice, .default=true,
+        true/.code={\@termcalde@dtmconf@frompreambletrue},
+        false/.code={\@termcalde@dtmconf@frompreamblefalse}}
 %    \end{macrocode}
 % Process the options
 %    \begin{macrocode}
@@ -150,7 +153,7 @@
 %
 %
 % \subsubsection*{Require and configure \texttt{datetime2}}
-% \changes{2.0}{2018-03-06}{Require \texttt{datetime2}}
+% \changes{2.0}{2018-03-09}{Require \texttt{datetime2}}
 %
 % \begin{macro}{\termcalde@dtmnumeric}
 % Define an auxiliary command, adding "=numeric" to "datetime2"'s "useregional" key and adding "-numeric" to "datetime2"'s module names,
