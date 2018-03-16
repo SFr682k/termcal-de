@@ -1,4 +1,4 @@
-%%  This is file 'termcal-de-doc.dtx', Version 2018-03-09
+%%  This is file 'termcal-de-doc.dtx', Version 2018-03-16
 %%  Copyright 2017-18 Sebastian Friedl <sfr682k@t-online.de>
 %% 
 %%  This work may be distributed and/or modified under the conditions of the LaTeX Project
@@ -28,7 +28,12 @@
 
 \documentclass[11pt]{ltxdoc}
 
+\usepackage{iftex}
+\RequireLuaTeX
+
 \usepackage[no-math]{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
 \usepackage[english]{selnolig}
 
 \usepackage{csquotes}
@@ -62,7 +67,7 @@
 
 \title{The \texttt{termcal-de} package \\ {\large\url{https://github.com/SFr682k/termcal-de}}}
 \author{Sebastian Friedl \\ \href{mailto:sfr682k@t-online.de}{\ttfamily sfr682k@t-online.de}}
-\date{2018/03/09 (v2.0)}
+\date{2018/03/16 (v2.0)}
 
 \hypersetup{pdftitle={The termcal-de package},pdfauthor={Sebastian Friedl}}
 
@@ -91,18 +96,17 @@
     \addcontentsline{toc}{subsection}{Dependencies and other requirements}
     The "termcal-de" package requires \LaTeXe\ and the following packages:
     
-    \medskip
-    \DescribeMacro{termcal}
-    The main "termcal" package
+    \begin{description}
+        \item[\texttt{termcal}]
+            The main "termcal" package
     
-    \medskip
-    \DescribeMacro{pgfkeys}\DescribeMacro{pgfopts}
-    Packages required for defining PGF flavoured key-value sets and processing them as package options
+        \item[\texttt{pgfkeys}, \texttt{pgfopts}]
+            Packages required for defining key-value sets and processing them as package options
     
-    \medskip
-    \DescribeMacro{datetime2}\DescribeMacro{datetime2-german}
-    "termcal-de" uses "datetime2" and its German language module, "datetime2-german", to print the date to the calendar cells.
-    Please ensure that at least version 2.0 of "datetime2-german" is installed.
+        \item[\texttt{datetime2}, \texttt{datetime2-german}]
+            "termcal-de" uses "datetime2" and its German language module, "datetime2-german", to print the date to the calendar cells.
+            Please ensure that at least version 2.0 of "datetime2-german" is installed.
+    \end{description}
     
     \subsection*{Installation}
     \addcontentsline{toc}{subsection}{Installation}
@@ -176,14 +180,29 @@
     \subsection{Package options} \label{sec:options}
     \textbf{TODO:} Provide a package option allowing to use abbreviated month names
     
-    \subsubsection*{How to read this section}
-    \textbf{TODO:} Explain better how to interpret the option list and provide some basic examples
+    \subsubsection*{How to read this section -- an example}
+    The key-value options provided by "termcal-de" are depicted as follows:
     
     \begin{itemize}
-        \item "key" \dotfill \underline{"possible"}, \texttt{\bfseries values} \\[\smallskipamount]
-            \textbf{bold}: default behavior of "termcal-de" loaded without any options \\
-            \underline{underline}: value assumed when no value for "key" is given
+        \item "metasyntacticals" \dotfill \underline{"foo"}, \texttt{\bfseries bar}, "foobar" \\[\smallskipamount]
+            Below the first line a short description of the option's effect is given.
             
+            \smallskip
+            \textit{But how should one interpret the first line?} \\
+            That's quite simple since everything is based on this basic principle:
+            \begin{enumerate}
+                \item
+                    The \textbf{\itshape key's name} is printed on the left hand side of the dotted line using typewriter font.
+                    In this case, the key's name is "metasyntacticals" and you can change its value using "\usepackage[metasyntacticals=…]{termcal-de}".
+                \item
+                    \textbf{\itshape Possible values} for this key are printed on the right hand side of the dotted line.
+                    In this case, valid key-value-specificatios would be "metasyntacticals=foo", "metasyntacticals=bar" and "metasyntacticals=foobar".
+                \item
+                    When using a \textbf{\itshape key without a value specified}, the \underline{"underlined"} value is assumed.
+                    Therefore, in this example "\usepackage[metasyntacticals]{termcal-de}" is equal to "\usepackage[metasyntacticals=foo]{termcal-de}".
+                \item
+                    "termcal-de"'s \textbf{\itshape default configuration set} is composed out of the \texttt{\bfseries bold} printed values of all keys listed here.
+            \end{enumerate}
     \end{itemize}
 
     
@@ -243,27 +262,26 @@
     
     \section{Differences to plain \texttt{termcal}} \label{sec:differences}
     \paragraph{Important Note:}
-    \textit{This section only applies until the "compat" option (see section \ref{sec:options}) is given.} As soon as you pass it to "termcal-de", the command's syntax stays the same as in plain "termcal".
+    \textit{This section only applies until the "compat" option (see section \ref{sec:options}) is given.} As soon as you pass it to "termcal-de", the command's syntax stays --- as in plain "termcal" itself --- "M/D/Y".
     
     \bigskip\medskip
-    "termcal-de" does not only change the format of the printed dates, it also changes the date parameter's format expected by the standard "termcal" commands. \\
-    In following, affected commands are listed:
-    
+    When using the standard configuration "termcal-de" does not only change the format of the printed dates, it also changes the date parameter's format expected by the standard "termcal" commands. \\
+    More precisely, these commands are affected:
     \begin{itemize}\itemsep0pt
         \item "\begin{calendar}{<starting date>}{<nr of weeks>}"
         \item "\options{<date>}{<option list>}"
         \item "\caltext{<date>}{<text>}"
     \end{itemize}
     
-    Plain "termcal" expects "<starting date>" and "<date>" to be given in the "m/d/y" format (e.~g.~"4/16/17" for April 16, 2017). Due to redefinition in "termcal-de", both arguments, "<starting date>" and "<date>" have to be given in the "D.M.YYYY" format (for April~16, 2017: "16.4.2017"). \\
+    Plain "termcal" expects "<starting date>" and "<date>" to be given in the "m/d/y" format (e.~g.~"1/10/18" for January 10, 2018). Due to redefinition in "termcal-de", both arguments, "<starting date>" and "<date>" have to be given in the "D.M.YYYY" format (for January~10, 2018: "10.1.2018"). \\
     See table \ref{dateformatcomp} for some examples.
     
     \begin{table}[ht] \centering \small \renewcommand{\arraystretch}{1.25}
         \begin{tabular}{cc}
             \textbf{plain "termcal"} & \textbf{with "termcal-de" package} \\\hline
-            "\begin{calendar}{3/16/11}{4}" & "\begin{calendar}{16.3.2011}{4}" \\
+            "\begin{calendar}{1/10/18}{4}" & "\begin{calendar}{10.1.2018}{4}" \\
             "\options{12/21/12}{\noclass}" & "\options{21.12.2012}{\noclass}" \\
-            "\caltext{2/17/18}{Exam}" & "\caltext{17.2.2018}{Exam}" \\
+            "\caltext{2/7/11}{Exam}" & "\caltext{7.2.2011}{Exam}" \\
             \hspace{.45\textwidth} & \hspace{.45\textwidth}
         \end{tabular}
         \vspace{-1.5em}
@@ -271,6 +289,26 @@
         \caption{\small Comparison between plain \texttt{termcal} and \texttt{termcal} extended with \texttt{termcal-de}}
         \label{dateformatcomp}
     \end{table}
+    
+    \begin{center}
+        \framebox{\framebox{\begin{minipage}{.95\textwidth}
+            \textbf{\scshape\Large Attention!!} \\[\smallskipamount]
+            The date format \emph{has} to be "D.M.YYYY" (or "M/D/Y" when using the "compat" option). \\
+            This means that the \emph{date specifications must not contain leading zeros}.
+            
+            \medskip
+            \textbf{Examples:}~~ Use …
+            \vspace{-\smallskipamount}
+            \begin{center}
+                \begin{tabular}[t]{ccccccc}
+                    "5.1.2016"  &    & "1/5/16"  &            & "05.01.2016" &    & "01/05/16" \\
+                    "9.11.2019" & or & "11/9/19" & instead of & "09.11.2019" & or & "11/09/19" \\
+                    "14.3.2018" &    & "3/14/18" &            & "14.03.2018" &    & "03/14/18"
+                \end{tabular}
+            \end{center}
+        \end{minipage}}}
+    \end{center}
+    
     
     % TODO: Move this stuff to other sections
 %     \section{Additional information}
