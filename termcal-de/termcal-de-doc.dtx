@@ -1,17 +1,15 @@
-%%  This is file 'termcal-de-doc.dtx', Version 2018-03-16
-%%  Copyright 2017-18 Sebastian Friedl <sfr682k@t-online.de>
-%% 
-%%  This work may be distributed and/or modified under the conditions of the LaTeX Project
-%%  Public License, either version 1.3c of this license or (at your option) any later version.
-%%  The latest version of this license is available at
-%%      http://www.latex-project.org/lppl.txt
-%%  and version 1.3c or later is part of all distributions of LaTeX version 2008-05-04 or later
+%\iffalse
+%%  Doc-Source file to use with LaTeX2e
+%%  Copyright (C) 2017-18 Sebastian Friedl
 %%
-%%  This work has the LPPL maintenace status 'maintained'.
-%%  The current maintainer of this work is Sebastian Friedl.
+%%  This work is subject to the LaTeX Project Public License, Version 1.3c or -- at
+%%  your option -- any later version of this license.
+%%  The work consists of the files termcal-de.dtx, termcal-de.ins,
+%%  termcal-de-doc.dtx, termcal-de-doc-example1.dtx, termcal-de-doc-example2.dtx
+%%  and the derived file termcal-de.sty
 %%
-%%  This work consists of the files termcal-de.dtx, termcal-de.ins,
-%%  the derived file termcal-de.sty and termcal-de-doc.dtx
+%%  This work has the LPPL maintenance status `maintained'.
+%%  Current maintainer of the work is Sebastian Friedl.
 %%
 %%  -------------------------------------------------------------------------------------------
 %%
@@ -24,7 +22,7 @@
 %%  to my email address (sfr682k@t-online.de).
 %%
 %%  -------------------------------------------------------------------------------------------
-
+%\fi
 
 \documentclass[11pt]{ltxdoc}
 
@@ -39,6 +37,10 @@
 \usepackage{csquotes}
 \usepackage{hologo}
 \usepackage[unicode, pdfborder={0 0 0}, linktoc=all, hyperindex=false]{hyperref}
+\usepackage{multicol}
+\usepackage{xcolor}
+
+\usepackage[datetime2={local=german}]{termcal-de}
 
 \parindent0pt
 
@@ -62,18 +64,21 @@
 
 \PageIndex
 \RecordChanges
-\CodelineNumbered
 
 
 \title{The \texttt{termcal-de} package \\ {\large\url{https://github.com/SFr682k/termcal-de}}}
 \author{Sebastian Friedl \\ \href{mailto:sfr682k@t-online.de}{\ttfamily sfr682k@t-online.de}}
-\date{2018/03/16 (v2.0)}
+\date{2018/03/20 (v2.0)}
 
 \hypersetup{pdftitle={The termcal-de package},pdfauthor={Sebastian Friedl}}
 
 \begin{document}
     \maketitle
     \thispagestyle{empty}
+    
+    % some "shipout" hackery to use the german style for dates in the calendar
+    \DTMsetstyle{german-numeric}
+    
     
     \begin{center} \itshape
         \enquote{To achieve great things, two things are needed; \\ a plan, and not quite enough time} \\
@@ -141,14 +146,21 @@
         The latest version of this license is available at \url{http://www.latex-project.org/lppl.txt} and version 1.3c or later is part of all distributions of \LaTeX\ version 2008-05-04 or later.
         
         \smallskip
-        This work has the LPPL maintenace status \enquote*{maintained}. The current maintainer of this work is Sebastian Friedl. \\
+        This work has the LPPL maintenace status \enquote*{maintained}. \\
+        Current maintainer of this work is Sebastian Friedl.
+        
+        \medskip
         This work consists of the following files:
-        \begin{itemize} \itemsep 0pt
-            \item "termcal-de.dtx",
-            \item "termcal-de.ins",
-            \item the derived file "termcal-de.sty" and
-            \item "termcal-de-doc.dtx"
-        \end{itemize}
+        \begin{multicols}{2}
+            \begin{itemize} \itemsep 0pt
+                \item "termcal-de.dtx",
+                \item "termcal-de.ins",
+                \item "termcal-de-doc.dtx",
+                \item "termcal-de-doc-example1.dtx",
+                \item "termcal-de-doc-example2.dtx"
+                \item and the derived file "termcal-de.sty"
+            \end{itemize}
+        \end{multicols}
     \end{small}
 
 
@@ -164,7 +176,7 @@
     
     \medskip
     "termcal-de" only adds a German localization to the \texttt{termcal} package. \\
-    So, if you are already familiar with "termcal", you should read section \ref{sec:differences} about differences to plain "termcal" \emph{in any case}.
+    If you are already familiar with "termcal", you should read section \ref{sec:differences} about differences to plain "termcal" \emph{in any case}.
     
     \medskip
     However, if you never used "termcal", you could \dots
@@ -178,8 +190,6 @@
     
     
     \subsection{Package options} \label{sec:options}
-    \textbf{TODO:} Provide a package option allowing to use abbreviated month names
-    
     \subsubsection*{How to read this section -- an example}
     The key-value options provided by "termcal-de" are depicted as follows:
     
@@ -204,7 +214,6 @@
                     "termcal-de"'s \textbf{\itshape default configuration set} is composed out of the \texttt{\bfseries bold} printed values of all keys listed here.
             \end{enumerate}
     \end{itemize}
-
     
     
     \subsubsection*{Provided key-value options}
@@ -252,13 +261,88 @@
     
     
     \section{A short tutorial} \label{sec:tutorial}
-    % TODO: Write a tutorial explaining the basic usage of termcal-de's commands
-    \textbf{TODO:} Write a short tutorial explaining "termcal"'s basic usage
+    This tutorial explains how to use the functionalities provided by "termcal". \\
+    It consists of two parts: How to create a calendar grid and how to customize it
+
+    
+    \subsection{Creating a calendar grid} \label{sec:tut-basics}
+    \subsubsection*{The \texttt{calendar} environment}
+    \DescribeEnv{calendar}
+    The core of "termcal" is the "calendar" environment. It takes two arguments: the starting date and the number of weeks to be printed. \\
+    Syntax: "\begin{calendar}{<start date>}{<nr of weeks>}"
+    
+    \begin{center}
+        \framebox{\framebox{\begin{minipage}{.95\textwidth}
+            \textbf{\scshape\Large Note:} \\[\smallskipamount]
+            Plain "termcal" requires all dates to be given in the "M/D/Y" format, while "termcal-de" expects all dates to be given as "D.M.YYYY" (e.~g. "19.3.2018").
+            However, you are able to switch between both formats using the \opt{compat} option (see section~\ref{sec:options}).
+        \end{minipage}}}
+    \end{center}
+    
+    \subsubsection*{Specifying dates}
+    The (week)days shown in the calendar have to be specified inside the "calendar" environment using the commands "\calday" and "\skipday". \\
+    Both commands specify the days of the week in order, thus there should be seven of them; otherwise, your calendar will shift …
+    
+    \smallskip
+    If you never used "\calday" in a "calendar" environment and try to compile your document, you will get some nasty \enquote{arithmetic overflow} errors.
+    
+    \bigskip
+    \DescribeMacro{\skipday}
+    The macro "\skipday" simply declares that the corresponding day should not be printed in that calendar.
+    
+    \medskip
+    \DescribeMacro{\calday}
+    The macro "\calday" is used to specify a day which is to be printed.
+    It requires a \textit{mandatory argument} being a (possibly empty) list of (nearly) all \LaTeX\ commands available to be executed before printing the cell content and accepts an \textit{optional argument} being the header of the date column.
+    
+    \subsubsection*{Available options: \texttt{\textbackslash classday}s, \texttt{\textbackslash noclassday}s and \texttt{\textbackslash weeklytext}}
+    \DescribeMacro{\classday}\DescribeMacro{\noclassday}
+    The macros "\classday" and "\noclassday" declare, that the specified day is, or is not, a class day. Days specified as class days are numbered and can be refered to by their numbers. \\[\smallskipamount]
+    Setting "\noclassday" may be omitted as long as you don't have to override a "\classday" specified for the whole column.
+    
+    \medskip
+    \DescribeMacro{\weeklytext}
+    Also, weekly text can be added by using the "\weeklytext" command inside a column declaration; you may use arbitrary \LaTeX\ code (e.~g. "\weeklytext{foo \\ bar}")
+    
+    \subsubsection*{Example: A simple calendar}
+    This example only demonstrate how to use the "calendar" environment and specify some dates. See figure~\ref{fig:basicexample} for the resulting output. \\
+    Further customization of the calendar grid is described in section \ref{sec:tut-customization}.
+    
+    \medskip
+    {\color{green!50!black}\ttfamily\itshape\small ~~\% \textbackslash usepackage\{termcal-de\}}
+    \DocInput{termcal-de-doc-example1.dtx}
+    
+    \begin{figure}[h]\centering
+        \begin{minipage}{.95\textwidth}
+            \setlength{\calwidth}{\linewidth}
+            \input{termcal-de-doc-example1.dtx}
+        \end{minipage}
+        
+        \caption{Output of the example shown in section \ref{sec:tut-basics}}
+        \label{fig:basicexample}
+    \end{figure}
+
+    
+    \subsection{Customizing the calendar grid}\label{sec:tut-customization}
+    The output of this example shown above is kind of \enquote{primitive}: a calender grid is existent, but the text for (nearly all) boxes is missing. Also, one would like to change the general options for some specific dates.
+    
+    \smallskip
+    In this section we are going to …\nopagebreak[4]
+    \begin{itemize}\itemsep0pt
+        \item resize the calendar,
+        \item add text to single dates and
+        \item change the options for specific dates
+    \end{itemize}
+
+    \textbf{TODO:} Finish writing this section
+    
     
     \begin{description}
         \item[Printing the current date.]
             Using the "\currentdate" command inside a cell will insert the date as printed in the top left corner of the according cell.
     \end{description}
+    
+    
     
     \section{Differences to plain \texttt{termcal}} \label{sec:differences}
     \paragraph{Important Note:}
@@ -310,14 +394,6 @@
     \end{center}
     
     
-    % TODO: Move this stuff to other sections
-%     \section{Additional information}
-%     \subsection{Using short month names}
-%     By default, \texttt{termcal-de} prints long month names (e.~g.~\enquote{Januar}) when a new month starts. Passing the \texttt{shortmonth} option to the "\usepackage{termcal-de}" command switches to printing short month names (e.~g.~\enquote{Jan} for \enquote{Januar}).
-%     
-%     \subsection{Printing the current date}
-%     You can print the current date for a cell using the "\currentdate" command inside this cell. It produces something like \enquote{9.~Februar~2000}.
-    
     
     
     % Start determining the checksum from here
@@ -330,7 +406,12 @@
         \IndexPrologue{\section*{Index}}
         \PrintIndex}
     \clearpage
+    
+    
+    
+    
     \part{The package code}
+    \CodelineNumbered
     \DocInput{termcal-de.dtx}
     
     
