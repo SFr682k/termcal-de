@@ -51,7 +51,7 @@
 %    \end{macrocode}
 %
 % Require packages providing the key-value option stuff
-% \changes{2.0}{2018-03-21}{Key-Value-Options}
+% \changes{2.0}{2018/03/21}{Key-Value-Options}
 %    \begin{macrocode}
 \RequirePackage{pgfkeys}
 \RequirePackage{pgfopts}
@@ -88,7 +88,7 @@
 %
 % \medskip
 % Define a \opt{compat} option for switching on compatibility mode
-% \changes{2.0}{2018-03-21}{Introduce a compatibility option}
+% \changes{2.0}{2018/03/21}{Introduce a compatibility option}
 %    \begin{macrocode}
 \pgfkeys{%
     /termcal-de/compat/.cd, .is choice, .default=true,
@@ -102,7 +102,7 @@
 %     \item[\texttt{atNewMonth}] Draw a frame around the date at the beginning of a month
 %     \item[\texttt{never}] Never draw a frame around the date
 % \end{itemize}
-% \changes{2.0}{2018-03-21}{Configurable date frame}
+% \changes{2.0}{2018/03/21}{Configurable date frame}
 %    \begin{macrocode}
 \pgfkeys{%
     /termcal-de/drawdateframe/.cd, .is choice, .default=always,
@@ -155,7 +155,7 @@
 %
 %
 % \subsubsection*{Require and configure \texttt{datetime2}}
-% \changes{2.0}{2018-03-21}{Require \texttt{datetime2}}
+% \changes{2.0}{2018/03/21}{Require \texttt{datetime2}}
 %
 % \begin{macro}{\termcalde@dtmnumeric}
 % Define an auxiliary command, adding "=numeric" to "datetime2"'s "useregional" key and adding "-numeric" to "datetime2"'s module names,
