@@ -8,7 +8,7 @@
 %%  termcal-de-doc.dtx, termcal-de-doc-example1.dtx, termcal-de-doc-example2.dtx
 %%  and the derived file termcal-de.sty
 %%
-%%  This work has the LPPL maintenance status `maintained'.
+%%  This work has the LPPL maintenance status ‘maintained’.
 %%  Current maintainer of the work is Sebastian Friedl.
 %%
 %%  -------------------------------------------------------------------------------------------
@@ -68,7 +68,7 @@
 
 \title{The \texttt{termcal-de} package \\ {\large\url{https://github.com/SFr682k/termcal-de}}}
 \author{Sebastian Friedl \\ \href{mailto:sfr682k@t-online.de}{\ttfamily sfr682k@t-online.de}}
-\date{2018/03/20 (v2.0)}
+\date{2018/03/21 (v2.0)}
 
 \hypersetup{pdftitle={The termcal-de package},pdfauthor={Sebastian Friedl}}
 
@@ -259,7 +259,7 @@
 
     
     
-    
+    \clearpage
     \section{A short tutorial} \label{sec:tutorial}
     This tutorial explains how to use the functionalities provided by "termcal". \\
     It consists of two parts: How to create a calendar grid and how to customize it
@@ -330,20 +330,104 @@
     In this section we are going to …\nopagebreak[4]
     \begin{itemize}\itemsep0pt
         \item resize the calendar,
-        \item add text to single dates and
-        \item change the options for specific dates
+        \item add text to single dates,
+        \item add text to consecutive class days and
+        \item override the column options for specific dates
     \end{itemize}
 
-    \textbf{TODO:} Finish writing this section
+    \subsubsection*{Resizing the calendar}
+    "termcal" provides two lengths influencing the size of the calendar and its boxes: \\
+    \DescribeMacro{\calwidth}\DescribeMacro{\calboxdepth}
+    "\calwidth" representing the total width of the calendar and "\calboxdepth" determining the minimum height of the box for each day.
+    
+    \medskip
+    They may be set to other values using the "\setlength" command, e.~g.: \\
+    "\setlength{\calwidth}{.8\textwidth}" and \\
+    "\setlength{\calboxdepth}{1.25cm}"
+    
+    \subsubsection*{Adding text to single dates}
+    Changing the size of the grid doesn't do anything to the fact that we still have a grid -- without any content but the quite generic weekly text. However, one would certainly like to add specific content for specific dates.
+    
+    \smallskip
+    \DescribeMacro{\caltext}
+    "termcal"'s "\caltext" command requires two arguments: \textit{when} the text should be printed, and -- obviously -- the actual \textit{text} to be printed. \\
+    There are two possibilities to specify the date or class where text should be printed: either by the date or by the class number, for example \\
+    "\caltext{24.12.2012}{Christmas Eve \\ No class}" using the date and \\
+    "\caltext{C1}{First Class \\ Organisational matters}" using the class number
+    
+    \begin{center}
+        \framebox{\framebox{\begin{minipage}{.95\textwidth}
+            \textbf{\scshape\Large Attention!!} \\[\smallskipamount]
+            The date format \emph{has} to be "D.M.YYYY" (or "M/D/Y" when using the "compat" option). \\
+            This means that the \emph{date specifications must not contain leading zeros}.
+            
+            \medskip
+            \textbf{Examples:}~~ Use …
+            \vspace{-\smallskipamount}
+            \begin{center}
+                \begin{tabular}[t]{ccccccc}
+                    "5.1.2016"  &    & "1/5/16"  &            & "05.01.2016" &    & "01/05/16" \\
+                    "9.11.2019" & or & "11/9/19" & instead of & "09.11.2019" & or & "11/09/19" \\
+                    "14.3.2018" &    & "3/14/18" &            & "14.03.2018" &    & "03/14/18"
+                \end{tabular}
+            \end{center}
+        \end{minipage}}}
+    \end{center}
+    
+    \subsubsection*{Adding text to consecutive class days}
+    However, the "\caltext" command described above is not the best way to add text to consecutive class days. As a lecturer, you might want to prepone a certain topic -- and it's quite uncomfortable to change every single "C…" specification used in \textit{any} "\caltext" command.
+    
+    \smallskip
+    \DescribeMacro{\caltexton}\DescribeMacro{\caltextnext}
+    Therefore, "termcal" provides the commands "\caltexton" and "\caltextnext". \\
+    Specify the starting day of the series (as class number) and the text shown there using the "\caltexton" command. Then, you are able to add content to the successive class days using "\caltextnext". Use "\caltextnext" with an empty argument for skipping days.
+    
+    \smallskip
+    The following example shows such a simple series: \\
+    "\caltexton{2}{Introduction to metasyntactical variables}" \\
+    "\caltextnext{}" \\
+    "\caltextnext{foo and bar}"
+    
+    \subsubsection*{Override column options for specific dates}
+    Last but not least, we have to override the \enquote{global} column options for certain dates.
+    
+    \smallskip
+    \DescribeMacro{\options}
+    For specifying options for a specific day, the command "\options" is defined, which requires a date specification (like "\caltext") and a list of option (like "\calday"). Options added by "\options" are executed after options specified for "\calday" and may therefore be used to override the specification set of the last command. \\
+    Weekly text may be suppressed by using "\options" together with "\weeklytext{}".
+    
+    \smallskip
+    Examples: \\
+    "\options{18.12.2012}{\classday\weeklytext{}}" \\
+    "\options{20.12.2012}{\classday}" \\
+    "\options{21.12.2012}{\noclassday}"
+    
+    \medskip
+    \textbf{Remember:} The date specifications may \emph{not} contain any leading zeros!
+    
+    \subsubsection*{Example: A customized calendar}
+    This is an enhanced version of the example shown in section~\ref{sec:tut-basics}. Cell text has been added, options were changed for specific days and the cell depth is smaller. See figure~\ref{fig:advancedexample} for the resulting output.
+    
+    \medskip
+    {\color{green!50!black}\ttfamily\itshape\small ~~\% \textbackslash usepackage\{termcal-de\}}
+    \DocInput{termcal-de-doc-example2.dtx}
+    
+    \begin{figure}[h]\centering
+        \begin{minipage}{.95\textwidth}
+            \setlength{\calwidth}{\linewidth}
+            \input{termcal-de-doc-example2.dtx}
+        \end{minipage}
+        
+        \caption{Output of the example shown in section \ref{sec:tut-customization}}
+        \label{fig:advancedexample}
+    \end{figure}
     
     
-    \begin{description}
-        \item[Printing the current date.]
-            Using the "\currentdate" command inside a cell will insert the date as printed in the top left corner of the according cell.
-    \end{description}
     
     
     
+    
+    \clearpage
     \section{Differences to plain \texttt{termcal}} \label{sec:differences}
     \paragraph{Important Note:}
     \textit{This section only applies until the "compat" option (see section \ref{sec:options}) is given.} As soon as you pass it to "termcal-de", the command's syntax stays --- as in plain "termcal" itself --- "M/D/Y".

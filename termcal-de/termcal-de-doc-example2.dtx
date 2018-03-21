@@ -12,4 +12,33 @@
 % Current maintainer of the work is Sebastian Friedl.
 %\fi
 %    \begin{macrocode}
+\begin{calendar}{10.12.2012}{3}
+    \setlength{\calwidth}{.95\textwidth}
+    \setlength{\calboxdepth}{1.25cm}
+
+    \calday[*!@\$\#+]{\classday}
+    \calday[Tuesday]{\weeklytext{It's Tuesday. \\ *!@\$\#+'s over!}}
+    \skipday
+    \calday[Thursday]{}
+    \calday[Friday]{\classday}
+    \skipday
+    \skipday
+    
+    \options{18.12.2012}{\classday\weeklytext{}}
+    \options{20.12.2012}{\classday}
+    
+    \options{21.12.2012}{\noclassday}
+    \caltext{21.12.2012}{Doomsday \\ No class}
+    
+    \options{24.12.2012}{\noclassday}
+    \caltext{24.12.2012}{Christmas Eve \\ No class}
+    
+    \caltext{C1}{First Class \\ Organisational matters}
+    
+    \caltexton{2}{Introduction to metasyntactical variables}
+    \caltextnext{}
+    \caltextnext{"bla"/"blub" vs. "foo"/"bar"}
+    \caltextnext{"08/15", "42" and the mysterious "237"}
+    \caltextnext{Coffee break}
+\end{calendar}
 %    \end{macrocode}
